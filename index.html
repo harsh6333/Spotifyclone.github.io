@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPOTIFY CLONE</title>
+   <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,200&display=swap');
+body{
+    background-color: antiquewhite;
+    background-image: url(backgrounds/back.jpg);
+
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+nav{
+    font-family: 'Poppins', sans-serif;
+}
+nav ul {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    height: 65px;
+    background-color: black;
+    color: white;
+}
+nav ul li{
+    padding: 0 12px;
+
+}
+.brand img{
+    width: 48px;
+    padding: 0 8px;
+}
+.brand {
+    display: flex;
+    align-items: center;
+    font-weight: bolder;
+    font-size: 1.3rem;
+}
+.container {
+    min-height: 72vh;
+    background-color: black;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    width: 70%;
+    margin: 23px auto;
+    border-radius: 12px;
+    padding: 34px;
+    background-image: url(backgrounds/BACKGROUND.jpg);
+}
+.bottom {
+    position: sticky;
+    height: 120px;
+    background-color: black;
+    color: white;
+    bottom: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.icons {
+    margin-top:18px;
+}
+.icons i{
+    cursor: pointer;
+} 
+#myProgress{
+    width:80vw;
+    text-align: center;
+    cursor: pointer;
+}
+.songItems {
+    height: 50px;
+    display: flex;
+    background-color:rgb(199, 86, 86);
+    color: white;
+    margin: 12px;
+    justify-content: space space-between;
+    align-items: center;
+    border-radius: 34px;
+}
+.songItems img {
+    width: 43px;
+    margin: 0 23px;
+    border-radius: 34px;
+}
+.timestamp {
+    margin: 0 23px;
+    cursor: pointer;
+}
+.timestamp i {
+    cursor: pointer;
+}
+.songItemcontainer {
+    margin-top: 74px;
+}
+.songInfo {
+    position:absolute;
+    left: 10vw;
+    font-family: 'Courier New', Courier, monospace;
+}
+.songInfo img {
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+}
+@media only screen and (max-width: 1100px) {
+    body {
+      background-color: red;
+    }
+  }
+   </style>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li class="brand"><img src="backgrounds/LOGO.png" alt="Spotify">Spotify</li>
+            <li>Home</li>
+            <li>About</li>
+        </ul>
+    </nav>
+    <div class="container">
+
+        <div class="songlist">
+            <h1>Best Feel Better Songs</h1>
+            <div class="songItemcontainer">
+                <div class="songItems">
+                    <img src="BONES.jpg" alt="">
+                    <span class="songName">Bones-Imagine Dragons</span>
+                    <span class="songlistplay"><span class="timestamp">02:42 <i id="0"
+                                class="fa-regular songItemPlay fa-circle-play"></i></span></span>
+                </div>
+
+                <div class="songItems">
+                    <img src="CALL OUT MY NAME.jpg" alt="">
+                    <span class="songName">Call Out My Name-The Weekend</span><span class="songlistplay"><span class="timestamp">03:45 <i id="1" 
+                        class="fa-regular songItemPlay fa-circle-play"></i></span></span>
+                </div>
+
+                <div class="songItems">
+                    <img src="WATER FOUNTAIN.jpg" alt="">
+                    <span class="songName">Water Fountain-Alec Benjamin</span>
+                    <span class="songlistplay"><span class="timestamp">03:39 <i id="2"
+                                class="fa-regular songItemPlay fa-circle-play"></i></span></span>
+                </div>
+
+                <div class="songItems">
+                    <img src="THATS HILARIOUS.jpg" alt="">
+                    <span class="songName">That's Hilarious-Charlie Puth</span>
+                    <span class="songlistplay"><span class="timestamp">02:27 <i id="3"
+                                class="fa-regular songItemPlay fa-circle-play"></i></span></span>
+                </div>
+
+                <div class="songItems">
+                    <img src="LIGHT SWITCH.jpg" alt="">
+                    <span class="songName">Light Switch-Charlie Puth</span>
+                    <span class="songlistplay"><span class="timestamp">03:05 <i id="4"
+                                class="fa-regular songItemPlay fa-circle-play"></i></span></span>
+                </div>
+            </div>
+        </div>
+        <div class="songbanner"></div>
+    </div>
+
+    <div class="bottom">
+        <input type="range" name="range" id="myProgress" min="0" value="0" max="100">
+        <div class="icons">
+            <!-- fontawesome icons -->
+            <i class="fa-solid fa-3x fa-backward-step" id="previous"></i>
+            <i class=" fa-regular fa-3x fa-circle-play" id="masterPlay"></i>
+            <i class="fa-solid fa-3x fa-forward-step" id="next"></i>
+
+        </div>
+        <div class="songInfo">
+            <img src="backgrounds/BEAT.gif" width="50px" alt="" id="gif"><span id="masterSongName">Warriyo - Mortals [NCS Release]</span>
+        </div>
+    </div>
+    <script src="https://kit.fontawesome.com/663d5e8acd.js" crossorigin="anonymous"></script>
+    <script>
+        console.log("Welcome to Spotify");
+let songIndex = 0;
+let audioElement = new Audio('1.mp3');
+let masterPlay = document.getElementById('masterPlay')
+let myProgress = document.getElementById('myProgress')
+let gif = document.getElementById('gif')
+let masterSongName = document.getElementById('masterSongName');
+let songItems = Array.from(document.getElementsByClassName('songItems'));
+
+let songs = [
+    { songName: "Bones-Imagine Dragons", filepath: "songs/1.mp3", coverpath: "covers/BONES.jpg" },
+    { songName: "Call Out My Name-The Weekend", filepath: "songs/2.mp3", coverpath: "covers/CALL OUT MY NAME.jpg" },
+    { songName: "Water Fountain-Alec Benjamin", filepath: "songs/3.mp3", coverpath: "covers/WATER FOUNTAIN.jpg" },
+    { songName: "That's Hilarious-Charlie Puth", filepath: "songs/4.mp3", coverpath: "covers/THATS HILARIOUS.jpg" },
+    { songName: "Light Switch-Charlie Puth", filepath: "songs/5.mp3", coverpath: "covers/LIGHT SWITCH.jpg" }
+]
+//audioElement.play();
+songItems.forEach((element, i)=>{ 
+    element.getElementsByTagName("img")[0].src = songs[i].coverpath; 
+    element.getElementsByClassName("songName")[0].innerText = songs[i].songName; 
+})
+
+//hadnle play pause click
+masterPlay.addEventListener('click', () => {
+    if (audioElement.paused || audioElement.currentTime <= 0) {
+        audioElement.play();
+        masterPlay.classList.remove('fa-circle-play')
+        masterPlay.classList.add('fa-circle-pause')
+        gif.style.opacity = 1;
+    }
+    else {
+        audioElement.pause();
+        masterPlay.classList.remove('fa-circle-pause')
+        masterPlay.classList.add('fa-circle-play')
+        gif.style.opacity = 0;
+    }
+})
+//listen to events
+audioElement.addEventListener('timeupdate', () => {
+    ///update seekbar
+    progress = parseInt((audioElement.currentTime / audioElement.duration) * 100);
+    myProgress.value = progress;
+})
+myProgress.addEventListener('change', () => {
+    audioElement.currentTime = (myProgress.value * audioElement.duration) / 100;
+
+})
+const makeAllPlays = () => {
+    Array.from(document.getElementsByClassName('songItemPlay')).forEach((element) => {
+        element.classList.remove('fa-circle-pause');
+        element.classList.add('fa-circle-play');
+    })
+}
+
+Array.from(document.getElementsByClassName('songItemPlay')).forEach((element) => {
+    element.addEventListener('click', (e) => {
+        makeAllPlays();
+        songIndex = parseInt(e.target.id);
+        e.target.classList.remove('fa-circle-play');
+        e.target.classList.add('fa-circle-pause');
+        audioElement.src = `songs/${songIndex+1}.mp3`;
+        masterSongName.innerText = songs[songIndex].songName;
+        audioElement.currentTime = 0;
+        audioElement.play();
+        gif.style.opacity = 0.3;
+        masterPlay.classList.remove('fa-circle-play');
+        masterPlay.classList.add('fa-circle-pause');
+    })
+})
+
+document.getElementById('next').addEventListener('click', ()=>{
+    if(songIndex>=9){
+        songIndex = 0
+    }
+    else{
+        songIndex += 1;
+    }
+    audioElement.src = `songs/${songIndex+1}.mp3`;
+    masterSongName.innerText = songs[songIndex].songName;
+    audioElement.currentTime = 0;
+    audioElement.play();
+    masterPlay.classList.remove('fa-circle-play');
+    masterPlay.classList.add('fa-circle-pause');
+
+})
+
+document.getElementById('previous').addEventListener('click', ()=>{
+    if(songIndex<=0){
+        songIndex = 0
+    }
+    else{
+        songIndex -= 1;
+    }
+    audioElement.src = `songs/${songIndex+1}.mp3`;
+    masterSongName.innerText = songs[songIndex].songName;
+    audioElement.currentTime = 0;
+    audioElement.play();
+    masterPlay.classList.remove('fa-circle-play');
+    masterPlay.classList.add('fa-circle-pause');
+})
+
+    </script>
+</body>
+
+</html>
